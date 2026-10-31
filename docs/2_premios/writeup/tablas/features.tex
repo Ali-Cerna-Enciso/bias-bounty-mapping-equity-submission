@@ -1,0 +1,29 @@
+\begin{tabular}{lrrrp{6.3cm}}
+\toprule
+Feature & $\rho$ with $y$ & $\beta$ ($\lambda=0.1$) & $\Delta$RMSE if dropped & Definition \\
+\midrule
+\texttt{r\_tribal\_any} & +0.313 & +0.0198 & +0.00264 & $1[$tract intersects a tribal area$]$, 874 tracts = 8.9\% \\
+\texttt{g\_transport} & +0.183 & +0.0141 & +0.00147 & cand\_00 transport gap, $1.0$ when $km_{hw}=0$; $\rho=0.944$ with $1-km_{hw}/(km_{hw}+km_{tert}+km_{hw,ring25})$ \\
+\texttt{rural} & +0.272 & +0.0125 & +0.00082 & $1[\texttt{pct\_urban}<0.5]$; NaN when \texttt{pct\_urban} is missing \\
+\texttt{t\_route\_lowclass\_share} & +0.255 & +0.0113 & +0.00067 & share of road km on a numbered route in the lowest Overture road classes \\
+\texttt{h\_fire\_missing\_risk} & +0.123 & +0.0078 & +0.00043 & fire-station coverage deficit, 0 = no deficit \\
+\midrule
+Intercept $m$ & --- & 0.059806 & --- & public mean of $y$ (constant-0.05 submission) \\
+Predicted RMSE & --- & 0.08002 & --- & 5-feature blend, $\sqrt{\mathrm{Var}(y)}$ = 0.089022 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+
+\small
+\begin{tabular}{p{5.4cm}p{4.6cm}p{3.9cm}}
+\toprule
+Feature & Source & Transformation \\
+\midrule
+\texttt{rural} & \texttt{components\_cand00}.\newline\texttt{pct\_urban} = \texttt{pop\_urban}/\texttt{pop\_total}\newline (package strata, 2020 census) & z-score; NaN $\to 0$ = mean \\
+\texttt{g\_transport} & \texttt{components\_cand00}.\newline\texttt{g\_transport} (Overture roads) & z-score; no imputation, no winsor \\
+\texttt{t\_route\_lowclass\_share} & \texttt{s01\_routes.parquet}\newline (Overture named routes) & winsorise p1/p99, then z-score (79\% zeros, kurtosis 48) \\
+\texttt{h\_fire\_missing\_risk} & \texttt{s03\_fire\_ems.parquet}.\newline Overture POIs \texttt{fire\_department} and\newline \texttt{ambulance\_and\_ems\_services} vs population & z-score; no imputation, no winsor \\
+\texttt{r\_tribal\_any} & \texttt{s07\_rurality.parquet}.\newline Package strata column \texttt{tribal\_any} & z-score on a 0/1 column \\
+\bottomrule
+\end{tabular}

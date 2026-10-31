@@ -1,0 +1,12 @@
+# Versions of the environment where the pipeline was run. Only the libraries the
+# scripts import are listed; pip resolves their own dependencies.
+duckdb==2.0.0
+geopandas==1.2.0
+matplotlib==3.11.2
+numpy==2.4.6
+pandas==3.1.0
+pyarrow==26.0.0
+scikit-learn==1.9.0
+scipy==1.17.1
+shapely==2.2.0
+statsmodels==0.15.0

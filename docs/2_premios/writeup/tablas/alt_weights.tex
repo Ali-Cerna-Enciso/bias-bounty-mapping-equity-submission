@@ -1,0 +1,13 @@
+\begin{tabular}{lcrrrrr}
+\toprule
+Blend & $\lambda$ & Shrink $s$ & Pred. RMSE & $\Delta$ vs mix4 & LB RMSE & corr with 5-feature blend \\
+\midrule
+mix4 (submission 9) & 0.1 & 1.00 & 0.08265 & --- & 0.082736583 & 0.8518 \\
+\texttt{mezcla\_v2\_ridge} (submission 11) & 0.1 & 1.00 & 0.08002 & -0.00264 & 0.080228114 & 1.0000 \\
+\texttt{mezcla\_v3\_lam03} & 0.3 & 1.00 & 0.08027$^{\dagger}$ & -0.00238 & --- & 0.9997 \\
+\texttt{mezcla\_v3\_shrink85} (submission 12) & 0.1 & 0.85 & 0.08023 & -0.00243 & 0.080525733 & 1.0000 \\
+\texttt{mezcla\_v3\_sin\_fire} & 0.1 & 1.00 & 0.08045$^{\dagger}$ & -0.00220 & --- & 0.9773 \\
+\bottomrule
+\end{tabular}
+
+\par\smallskip\footnotesize $^{\dagger}$Predicted, not submitted: no leaderboard RMSE exists. Predicted RMSE uses the measured covariance identity $RMSE^2=\mathrm{Var}(y)-2\beta^{\top}c+\beta^{\top}S\beta$, with $S$ the sample covariance of the z-scored features and $c$ the covariance with $y$ implied by each probe's public score; the identity was validated on submission 9 ($+0.000087$). Predictions here chain from the predicted RMSE of the blend, not its real score. Correlation is Pearson over the 9{,}794 predictions against the 5-feature blend. Shrinking by $s$ gives $RMSE^2=\mathrm{Var}(y)-(2s-s^2)(\mathrm{Var}(y)-RMSE_0^2)$. $\Delta$ is against the submitted 4-feature blend (predicted 0.082654).

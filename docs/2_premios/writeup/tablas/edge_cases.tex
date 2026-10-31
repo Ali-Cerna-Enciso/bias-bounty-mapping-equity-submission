@@ -1,0 +1,52 @@
+\begin{tabular}{lrrrrrrr}
+\toprule
+Case & $n$ & \% of tracts & Mean pred. & Min & Max & Ratio & \texttt{pct\_urban} NaN \\
+\midrule
+pop0 & 27 & 0.28 & 0.06048 & 0.02814 & 0.09500 & 1.01$\times$ & 27 \\
+water50 & 43 & 0.44 & 0.06194 & 0.01821 & 0.17223 & 1.04$\times$ & 2 \\
+water90 & 3 & 0.03 & 0.08713 & 0.07139 & 0.09500 & 1.46$\times$ & 2 \\
+nobldg & 2 & 0.02 & 0.09500 & 0.09500 & 0.09500 & 1.59$\times$ & 2 \\
+noroad & 1 & 0.01 & 0.09500 & 0.09500 & 0.09500 & 1.59$\times$ & 1 \\
+nopoi & 2 & 0.02 & 0.09500 & 0.09500 & 0.09500 & 1.59$\times$ & 2 \\
+nohighway & 137 & 1.40 & 0.11807 & 0.08894 & 0.21470 & 1.97$\times$ & 7 \\
+\midrule
+All tracts & 9794 & 100.00 & 0.05981 & 0.01539 & 0.26101 & 1.00$\times$ & 27 \\
+\bottomrule
+\end{tabular}
+
+\par\smallskip\footnotesize
+Ratio = mean prediction inside the case / global mean (0.05981). Predictions are the submitted 5-feature blend (\texttt{mezcla\_v2\_ridge.csv}); 0 of 9{,}794 rows hit the $[0,1]$ clip.
+\begin{tabular}{lrrrrrr}
+\toprule
+Case & eastern-ok & eastern-wa & maricopa-az & northern-ca & south-central-tx & All \\
+\midrule
+\multicolumn{7}{l}{\emph{Cells: $n$ / mean prediction}} \\
+\midrule
+pop0 & 1 / 0.0417 & 1 / 0.0538 & 11 / 0.0626 & 0 / --- & 14 / 0.0606 & 27 / 0.0605 \\
+water50 & 1 / 0.0525 & 0 / --- & 0 / --- & 2 / 0.0207 & 40 / 0.0642 & 43 / 0.0619 \\
+water90 & 0 / --- & 0 / --- & 0 / --- & 0 / --- & 3 / 0.0871 & 3 / 0.0871 \\
+nobldg & 0 / --- & 0 / --- & 0 / --- & 0 / --- & 2 / 0.0950 & 2 / 0.0950 \\
+noroad & 0 / --- & 0 / --- & 0 / --- & 0 / --- & 1 / 0.0950 & 1 / 0.0950 \\
+nopoi & 0 / --- & 0 / --- & 0 / --- & 0 / --- & 2 / 0.0950 & 2 / 0.0950 \\
+nohighway & 28 / 0.1550 & 5 / 0.1160 & 33 / 0.1077 & 7 / 0.1184 & 64 / 0.1074 & 137 / 0.1181 \\
+\midrule
+Region mean pred. & 0.1134 & 0.0664 & 0.0521 & 0.0580 & 0.0509 & 0.0598 \\
+Region $n$ & 1192 & 415 & 1593 & 591 & 6003 & 9794 \\
+\bottomrule
+\end{tabular}
+
+\smallskip
+
+\begin{tabular}{p{1.7cm}p{11.4cm}}
+\toprule
+Case & Treatment in the pipeline \\
+\midrule
+pop0 & no mask, no imputation; same formula. 27/27 lack \texttt{pct\_urban}, so \texttt{rural} is undefined and the z-fill sets it to its mean \\
+water50 & no mask. Both water-only tracts (ALAND $=0$) have $km_{hw}=0$, so \texttt{g\_transport} takes its maximum value 1.0 \\
+water90 & same as above; the third tract (0.93 water) has 3{,}005 residents and 3{,}093 buildings \\
+nobldg & no mask in the blend. In the cand\_00 block a building-less tract gets the maximum gap, not a missing value \\
+noroad & no mask; \texttt{km\_highway}$=0$ gives \texttt{g\_transport}$=1.0$ (maximum gap), the opposite of a fully mapped tract \\
+nopoi & no mask in the blend; \texttt{components.py} returns 0 only for a zero expectation denominator (not in the final blend) \\
+nohighway & no mask; \texttt{g\_transport}$=1.0$ for all 137 by construction of the cand\_00 column \\
+\bottomrule
+\end{tabular}

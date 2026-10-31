@@ -1,0 +1,15 @@
+# Competition data: 5.8 GB, downloaded separately (see README)
+CONCURSO/data/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# LaTeX build products
+*.aux
+*.log
+*.out
+
+# ACS bulk tables re-downloaded by l6/l8 (~46 and 48 MB)
+datos/externos/census_acs/*.dat
